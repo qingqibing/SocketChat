@@ -6,16 +6,28 @@
 #define SERVER_SERVER_H
 
 #include "protobuf/chat.pb.h"
+#include "model/User.h"
 using namespace chat;
 
 class Server {
+	std::map<int, User*> users;
+	std::set<int> onlineUsers;
+
+	bool isOnline(int userID) const;
+	User* getUserByName(std::string const& username) const;
+	User* getUser(int id) const;
+	User* newUser(std::string const& username, std::string const& password);
+
+	static Response OK();
+	static Response Error(std::string const& info);
 public:
 	LoginResponse login(LoginRequest const& request);
 	Response logout(LogoutRequest const& request);
-	GetUserInfosResponse getUserInfos(GetUserInfosRequest const& request);
-	GetMessagesResponse getMessages(GetMessagesRequest const& request);
+	Response signup(SignupRequest const& request);
+	GetUserInfosResponse getUserInfos(GetUserInfosRequest const& request) const;
+	GetMessagesResponse getMessages(GetMessagesRequest const& request) const;
 	Response makeFriend(MakeFriendRequest const& request);
-	Response sendMessage(ChatMessage const& message);
+	Response newMessage(ChatMessage const& message);
 };
 
 

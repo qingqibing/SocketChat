@@ -65,9 +65,12 @@ extern NetMsgDefaultTypeInternal _NetMsg_default_instance_;
 class Response;
 class ResponseDefaultTypeInternal;
 extern ResponseDefaultTypeInternal _Response_default_instance_;
-class User;
-class UserDefaultTypeInternal;
-extern UserDefaultTypeInternal _User_default_instance_;
+class SignupRequest;
+class SignupRequestDefaultTypeInternal;
+extern SignupRequestDefaultTypeInternal _SignupRequest_default_instance_;
+class UserInfo;
+class UserInfoDefaultTypeInternal;
+extern UserInfoDefaultTypeInternal _UserInfo_default_instance_;
 }  // namespace chat
 
 namespace chat {
@@ -531,18 +534,160 @@ class LoginResponse : public ::google::protobuf::Message /* @@protoc_insertion_p
   ::std::string* release_token();
   void set_allocated_token(::std::string* token);
 
+  // string info = 4;
+  void clear_info();
+  static const int kInfoFieldNumber = 4;
+  const ::std::string& info() const;
+  void set_info(const ::std::string& value);
+  #if LANG_CXX11
+  void set_info(::std::string&& value);
+  #endif
+  void set_info(const char* value);
+  void set_info(const char* value, size_t size);
+  ::std::string* mutable_info();
+  ::std::string* release_info();
+  void set_allocated_info(::std::string* info);
+
   // int32 id = 1;
   void clear_id();
   static const int kIdFieldNumber = 1;
   ::google::protobuf::int32 id() const;
   void set_id(::google::protobuf::int32 value);
 
+  // bool success = 3;
+  void clear_success();
+  static const int kSuccessFieldNumber = 3;
+  bool success() const;
+  void set_success(bool value);
+
   // @@protoc_insertion_point(class_scope:chat.LoginResponse)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   ::google::protobuf::internal::ArenaStringPtr token_;
+  ::google::protobuf::internal::ArenaStringPtr info_;
   ::google::protobuf::int32 id_;
+  bool success_;
+  mutable int _cached_size_;
+  friend struct protobuf_protobuf_2fchat_2eproto::TableStruct;
+};
+// -------------------------------------------------------------------
+
+class SignupRequest : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:chat.SignupRequest) */ {
+ public:
+  SignupRequest();
+  virtual ~SignupRequest();
+
+  SignupRequest(const SignupRequest& from);
+
+  inline SignupRequest& operator=(const SignupRequest& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  SignupRequest(SignupRequest&& from) noexcept
+    : SignupRequest() {
+    *this = ::std::move(from);
+  }
+
+  inline SignupRequest& operator=(SignupRequest&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const SignupRequest& default_instance();
+
+  static inline const SignupRequest* internal_default_instance() {
+    return reinterpret_cast<const SignupRequest*>(
+               &_SignupRequest_default_instance_);
+  }
+  static PROTOBUF_CONSTEXPR int const kIndexInFileMessages =
+    4;
+
+  void Swap(SignupRequest* other);
+  friend void swap(SignupRequest& a, SignupRequest& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline SignupRequest* New() const PROTOBUF_FINAL { return New(NULL); }
+
+  SignupRequest* New(::google::protobuf::Arena* arena) const PROTOBUF_FINAL;
+  void CopyFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
+  void MergeFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
+  void CopyFrom(const SignupRequest& from);
+  void MergeFrom(const SignupRequest& from);
+  void Clear() PROTOBUF_FINAL;
+  bool IsInitialized() const PROTOBUF_FINAL;
+
+  size_t ByteSizeLong() const PROTOBUF_FINAL;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) PROTOBUF_FINAL;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const PROTOBUF_FINAL;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const PROTOBUF_FINAL;
+  int GetCachedSize() const PROTOBUF_FINAL { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const PROTOBUF_FINAL;
+  void InternalSwap(SignupRequest* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const PROTOBUF_FINAL;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // string username = 1;
+  void clear_username();
+  static const int kUsernameFieldNumber = 1;
+  const ::std::string& username() const;
+  void set_username(const ::std::string& value);
+  #if LANG_CXX11
+  void set_username(::std::string&& value);
+  #endif
+  void set_username(const char* value);
+  void set_username(const char* value, size_t size);
+  ::std::string* mutable_username();
+  ::std::string* release_username();
+  void set_allocated_username(::std::string* username);
+
+  // string password = 2;
+  void clear_password();
+  static const int kPasswordFieldNumber = 2;
+  const ::std::string& password() const;
+  void set_password(const ::std::string& value);
+  #if LANG_CXX11
+  void set_password(::std::string&& value);
+  #endif
+  void set_password(const char* value);
+  void set_password(const char* value, size_t size);
+  ::std::string* mutable_password();
+  ::std::string* release_password();
+  void set_allocated_password(::std::string* password);
+
+  // @@protoc_insertion_point(class_scope:chat.SignupRequest)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::internal::ArenaStringPtr username_;
+  ::google::protobuf::internal::ArenaStringPtr password_;
   mutable int _cached_size_;
   friend struct protobuf_protobuf_2fchat_2eproto::TableStruct;
 };
@@ -582,7 +727,7 @@ class LogoutRequest : public ::google::protobuf::Message /* @@protoc_insertion_p
                &_LogoutRequest_default_instance_);
   }
   static PROTOBUF_CONSTEXPR int const kIndexInFileMessages =
-    4;
+    5;
 
   void Swap(LogoutRequest* other);
   friend void swap(LogoutRequest& a, LogoutRequest& b) {
@@ -679,7 +824,7 @@ class GetUserInfosRequest : public ::google::protobuf::Message /* @@protoc_inser
                &_GetUserInfosRequest_default_instance_);
   }
   static PROTOBUF_CONSTEXPR int const kIndexInFileMessages =
-    5;
+    6;
 
   void Swap(GetUserInfosRequest* other);
   friend void swap(GetUserInfosRequest& a, GetUserInfosRequest& b) {
@@ -776,7 +921,7 @@ class GetUserInfosResponse : public ::google::protobuf::Message /* @@protoc_inse
                &_GetUserInfosResponse_default_instance_);
   }
   static PROTOBUF_CONSTEXPR int const kIndexInFileMessages =
-    6;
+    7;
 
   void Swap(GetUserInfosResponse* other);
   friend void swap(GetUserInfosResponse& a, GetUserInfosResponse& b) {
@@ -823,23 +968,23 @@ class GetUserInfosResponse : public ::google::protobuf::Message /* @@protoc_inse
 
   // accessors -------------------------------------------------------
 
-  // repeated .chat.User users = 1;
+  // repeated .chat.UserInfo users = 1;
   int users_size() const;
   void clear_users();
   static const int kUsersFieldNumber = 1;
-  const ::chat::User& users(int index) const;
-  ::chat::User* mutable_users(int index);
-  ::chat::User* add_users();
-  ::google::protobuf::RepeatedPtrField< ::chat::User >*
+  const ::chat::UserInfo& users(int index) const;
+  ::chat::UserInfo* mutable_users(int index);
+  ::chat::UserInfo* add_users();
+  ::google::protobuf::RepeatedPtrField< ::chat::UserInfo >*
       mutable_users();
-  const ::google::protobuf::RepeatedPtrField< ::chat::User >&
+  const ::google::protobuf::RepeatedPtrField< ::chat::UserInfo >&
       users() const;
 
   // @@protoc_insertion_point(class_scope:chat.GetUserInfosResponse)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
-  ::google::protobuf::RepeatedPtrField< ::chat::User > users_;
+  ::google::protobuf::RepeatedPtrField< ::chat::UserInfo > users_;
   mutable int _cached_size_;
   friend struct protobuf_protobuf_2fchat_2eproto::TableStruct;
 };
@@ -879,7 +1024,7 @@ class GetMessagesRequest : public ::google::protobuf::Message /* @@protoc_insert
                &_GetMessagesRequest_default_instance_);
   }
   static PROTOBUF_CONSTEXPR int const kIndexInFileMessages =
-    7;
+    8;
 
   void Swap(GetMessagesRequest* other);
   friend void swap(GetMessagesRequest& a, GetMessagesRequest& b) {
@@ -983,7 +1128,7 @@ class GetMessagesResponse : public ::google::protobuf::Message /* @@protoc_inser
                &_GetMessagesResponse_default_instance_);
   }
   static PROTOBUF_CONSTEXPR int const kIndexInFileMessages =
-    8;
+    9;
 
   void Swap(GetMessagesResponse* other);
   friend void swap(GetMessagesResponse& a, GetMessagesResponse& b) {
@@ -1086,7 +1231,7 @@ class MakeFriendRequest : public ::google::protobuf::Message /* @@protoc_inserti
                &_MakeFriendRequest_default_instance_);
   }
   static PROTOBUF_CONSTEXPR int const kIndexInFileMessages =
-    9;
+    10;
 
   void Swap(MakeFriendRequest* other);
   friend void swap(MakeFriendRequest& a, MakeFriendRequest& b) {
@@ -1196,7 +1341,7 @@ class ChatMessage : public ::google::protobuf::Message /* @@protoc_insertion_poi
                &_ChatMessage_default_instance_);
   }
   static PROTOBUF_CONSTEXPR int const kIndexInFileMessages =
-    10;
+    11;
 
   void Swap(ChatMessage* other);
   friend void swap(ChatMessage& a, ChatMessage& b) {
@@ -1321,24 +1466,24 @@ class ChatMessage : public ::google::protobuf::Message /* @@protoc_insertion_poi
 };
 // -------------------------------------------------------------------
 
-class User : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:chat.User) */ {
+class UserInfo : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:chat.UserInfo) */ {
  public:
-  User();
-  virtual ~User();
+  UserInfo();
+  virtual ~UserInfo();
 
-  User(const User& from);
+  UserInfo(const UserInfo& from);
 
-  inline User& operator=(const User& from) {
+  inline UserInfo& operator=(const UserInfo& from) {
     CopyFrom(from);
     return *this;
   }
   #if LANG_CXX11
-  User(User&& from) noexcept
-    : User() {
+  UserInfo(UserInfo&& from) noexcept
+    : UserInfo() {
     *this = ::std::move(from);
   }
 
-  inline User& operator=(User&& from) noexcept {
+  inline UserInfo& operator=(UserInfo&& from) noexcept {
     if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
       if (this != &from) InternalSwap(&from);
     } else {
@@ -1348,29 +1493,29 @@ class User : public ::google::protobuf::Message /* @@protoc_insertion_point(clas
   }
   #endif
   static const ::google::protobuf::Descriptor* descriptor();
-  static const User& default_instance();
+  static const UserInfo& default_instance();
 
-  static inline const User* internal_default_instance() {
-    return reinterpret_cast<const User*>(
-               &_User_default_instance_);
+  static inline const UserInfo* internal_default_instance() {
+    return reinterpret_cast<const UserInfo*>(
+               &_UserInfo_default_instance_);
   }
   static PROTOBUF_CONSTEXPR int const kIndexInFileMessages =
-    11;
+    12;
 
-  void Swap(User* other);
-  friend void swap(User& a, User& b) {
+  void Swap(UserInfo* other);
+  friend void swap(UserInfo& a, UserInfo& b) {
     a.Swap(&b);
   }
 
   // implements Message ----------------------------------------------
 
-  inline User* New() const PROTOBUF_FINAL { return New(NULL); }
+  inline UserInfo* New() const PROTOBUF_FINAL { return New(NULL); }
 
-  User* New(::google::protobuf::Arena* arena) const PROTOBUF_FINAL;
+  UserInfo* New(::google::protobuf::Arena* arena) const PROTOBUF_FINAL;
   void CopyFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
   void MergeFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
-  void CopyFrom(const User& from);
-  void MergeFrom(const User& from);
+  void CopyFrom(const UserInfo& from);
+  void MergeFrom(const UserInfo& from);
   void Clear() PROTOBUF_FINAL;
   bool IsInitialized() const PROTOBUF_FINAL;
 
@@ -1386,7 +1531,7 @@ class User : public ::google::protobuf::Message /* @@protoc_insertion_point(clas
   void SharedCtor();
   void SharedDtor();
   void SetCachedSize(int size) const PROTOBUF_FINAL;
-  void InternalSwap(User* other);
+  void InternalSwap(UserInfo* other);
   private:
   inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
     return NULL;
@@ -1434,7 +1579,7 @@ class User : public ::google::protobuf::Message /* @@protoc_insertion_point(clas
   bool isonline() const;
   void set_isonline(bool value);
 
-  // @@protoc_insertion_point(class_scope:chat.User)
+  // @@protoc_insertion_point(class_scope:chat.UserInfo)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
@@ -1735,6 +1880,73 @@ inline void LoginRequest::set_allocated_password(::std::string* password) {
 
 // LoginResponse
 
+// bool success = 3;
+inline void LoginResponse::clear_success() {
+  success_ = false;
+}
+inline bool LoginResponse::success() const {
+  // @@protoc_insertion_point(field_get:chat.LoginResponse.success)
+  return success_;
+}
+inline void LoginResponse::set_success(bool value) {
+  
+  success_ = value;
+  // @@protoc_insertion_point(field_set:chat.LoginResponse.success)
+}
+
+// string info = 4;
+inline void LoginResponse::clear_info() {
+  info_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& LoginResponse::info() const {
+  // @@protoc_insertion_point(field_get:chat.LoginResponse.info)
+  return info_.GetNoArena();
+}
+inline void LoginResponse::set_info(const ::std::string& value) {
+  
+  info_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:chat.LoginResponse.info)
+}
+#if LANG_CXX11
+inline void LoginResponse::set_info(::std::string&& value) {
+  
+  info_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:chat.LoginResponse.info)
+}
+#endif
+inline void LoginResponse::set_info(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  info_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:chat.LoginResponse.info)
+}
+inline void LoginResponse::set_info(const char* value, size_t size) {
+  
+  info_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:chat.LoginResponse.info)
+}
+inline ::std::string* LoginResponse::mutable_info() {
+  
+  // @@protoc_insertion_point(field_mutable:chat.LoginResponse.info)
+  return info_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* LoginResponse::release_info() {
+  // @@protoc_insertion_point(field_release:chat.LoginResponse.info)
+  
+  return info_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void LoginResponse::set_allocated_info(::std::string* info) {
+  if (info != NULL) {
+    
+  } else {
+    
+  }
+  info_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), info);
+  // @@protoc_insertion_point(field_set_allocated:chat.LoginResponse.info)
+}
+
 // int32 id = 1;
 inline void LoginResponse::clear_id() {
   id_ = 0;
@@ -1804,6 +2016,116 @@ inline void LoginResponse::set_allocated_token(::std::string* token) {
 
 // -------------------------------------------------------------------
 
+// SignupRequest
+
+// string username = 1;
+inline void SignupRequest::clear_username() {
+  username_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& SignupRequest::username() const {
+  // @@protoc_insertion_point(field_get:chat.SignupRequest.username)
+  return username_.GetNoArena();
+}
+inline void SignupRequest::set_username(const ::std::string& value) {
+  
+  username_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:chat.SignupRequest.username)
+}
+#if LANG_CXX11
+inline void SignupRequest::set_username(::std::string&& value) {
+  
+  username_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:chat.SignupRequest.username)
+}
+#endif
+inline void SignupRequest::set_username(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  username_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:chat.SignupRequest.username)
+}
+inline void SignupRequest::set_username(const char* value, size_t size) {
+  
+  username_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:chat.SignupRequest.username)
+}
+inline ::std::string* SignupRequest::mutable_username() {
+  
+  // @@protoc_insertion_point(field_mutable:chat.SignupRequest.username)
+  return username_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* SignupRequest::release_username() {
+  // @@protoc_insertion_point(field_release:chat.SignupRequest.username)
+  
+  return username_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void SignupRequest::set_allocated_username(::std::string* username) {
+  if (username != NULL) {
+    
+  } else {
+    
+  }
+  username_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), username);
+  // @@protoc_insertion_point(field_set_allocated:chat.SignupRequest.username)
+}
+
+// string password = 2;
+inline void SignupRequest::clear_password() {
+  password_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& SignupRequest::password() const {
+  // @@protoc_insertion_point(field_get:chat.SignupRequest.password)
+  return password_.GetNoArena();
+}
+inline void SignupRequest::set_password(const ::std::string& value) {
+  
+  password_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:chat.SignupRequest.password)
+}
+#if LANG_CXX11
+inline void SignupRequest::set_password(::std::string&& value) {
+  
+  password_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:chat.SignupRequest.password)
+}
+#endif
+inline void SignupRequest::set_password(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  password_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:chat.SignupRequest.password)
+}
+inline void SignupRequest::set_password(const char* value, size_t size) {
+  
+  password_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:chat.SignupRequest.password)
+}
+inline ::std::string* SignupRequest::mutable_password() {
+  
+  // @@protoc_insertion_point(field_mutable:chat.SignupRequest.password)
+  return password_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* SignupRequest::release_password() {
+  // @@protoc_insertion_point(field_release:chat.SignupRequest.password)
+  
+  return password_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void SignupRequest::set_allocated_password(::std::string* password) {
+  if (password != NULL) {
+    
+  } else {
+    
+  }
+  password_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), password);
+  // @@protoc_insertion_point(field_set_allocated:chat.SignupRequest.password)
+}
+
+// -------------------------------------------------------------------
+
 // LogoutRequest
 
 // int32 senderID = 1;
@@ -1842,31 +2164,31 @@ inline void GetUserInfosRequest::set_senderid(::google::protobuf::int32 value) {
 
 // GetUserInfosResponse
 
-// repeated .chat.User users = 1;
+// repeated .chat.UserInfo users = 1;
 inline int GetUserInfosResponse::users_size() const {
   return users_.size();
 }
 inline void GetUserInfosResponse::clear_users() {
   users_.Clear();
 }
-inline const ::chat::User& GetUserInfosResponse::users(int index) const {
+inline const ::chat::UserInfo& GetUserInfosResponse::users(int index) const {
   // @@protoc_insertion_point(field_get:chat.GetUserInfosResponse.users)
   return users_.Get(index);
 }
-inline ::chat::User* GetUserInfosResponse::mutable_users(int index) {
+inline ::chat::UserInfo* GetUserInfosResponse::mutable_users(int index) {
   // @@protoc_insertion_point(field_mutable:chat.GetUserInfosResponse.users)
   return users_.Mutable(index);
 }
-inline ::chat::User* GetUserInfosResponse::add_users() {
+inline ::chat::UserInfo* GetUserInfosResponse::add_users() {
   // @@protoc_insertion_point(field_add:chat.GetUserInfosResponse.users)
   return users_.Add();
 }
-inline ::google::protobuf::RepeatedPtrField< ::chat::User >*
+inline ::google::protobuf::RepeatedPtrField< ::chat::UserInfo >*
 GetUserInfosResponse::mutable_users() {
   // @@protoc_insertion_point(field_mutable_list:chat.GetUserInfosResponse.users)
   return &users_;
 }
-inline const ::google::protobuf::RepeatedPtrField< ::chat::User >&
+inline const ::google::protobuf::RepeatedPtrField< ::chat::UserInfo >&
 GetUserInfosResponse::users() const {
   // @@protoc_insertion_point(field_list:chat.GetUserInfosResponse.users)
   return users_;
@@ -2217,107 +2539,109 @@ inline ChatMessage::ContentCase ChatMessage::Content_case() const {
 }
 // -------------------------------------------------------------------
 
-// User
+// UserInfo
 
 // int32 id = 1;
-inline void User::clear_id() {
+inline void UserInfo::clear_id() {
   id_ = 0;
 }
-inline ::google::protobuf::int32 User::id() const {
-  // @@protoc_insertion_point(field_get:chat.User.id)
+inline ::google::protobuf::int32 UserInfo::id() const {
+  // @@protoc_insertion_point(field_get:chat.UserInfo.id)
   return id_;
 }
-inline void User::set_id(::google::protobuf::int32 value) {
+inline void UserInfo::set_id(::google::protobuf::int32 value) {
   
   id_ = value;
-  // @@protoc_insertion_point(field_set:chat.User.id)
+  // @@protoc_insertion_point(field_set:chat.UserInfo.id)
 }
 
 // string username = 2;
-inline void User::clear_username() {
+inline void UserInfo::clear_username() {
   username_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline const ::std::string& User::username() const {
-  // @@protoc_insertion_point(field_get:chat.User.username)
+inline const ::std::string& UserInfo::username() const {
+  // @@protoc_insertion_point(field_get:chat.UserInfo.username)
   return username_.GetNoArena();
 }
-inline void User::set_username(const ::std::string& value) {
+inline void UserInfo::set_username(const ::std::string& value) {
   
   username_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:chat.User.username)
+  // @@protoc_insertion_point(field_set:chat.UserInfo.username)
 }
 #if LANG_CXX11
-inline void User::set_username(::std::string&& value) {
+inline void UserInfo::set_username(::std::string&& value) {
   
   username_.SetNoArena(
     &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:chat.User.username)
+  // @@protoc_insertion_point(field_set_rvalue:chat.UserInfo.username)
 }
 #endif
-inline void User::set_username(const char* value) {
+inline void UserInfo::set_username(const char* value) {
   GOOGLE_DCHECK(value != NULL);
   
   username_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:chat.User.username)
+  // @@protoc_insertion_point(field_set_char:chat.UserInfo.username)
 }
-inline void User::set_username(const char* value, size_t size) {
+inline void UserInfo::set_username(const char* value, size_t size) {
   
   username_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:chat.User.username)
+  // @@protoc_insertion_point(field_set_pointer:chat.UserInfo.username)
 }
-inline ::std::string* User::mutable_username() {
+inline ::std::string* UserInfo::mutable_username() {
   
-  // @@protoc_insertion_point(field_mutable:chat.User.username)
+  // @@protoc_insertion_point(field_mutable:chat.UserInfo.username)
   return username_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline ::std::string* User::release_username() {
-  // @@protoc_insertion_point(field_release:chat.User.username)
+inline ::std::string* UserInfo::release_username() {
+  // @@protoc_insertion_point(field_release:chat.UserInfo.username)
   
   return username_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline void User::set_allocated_username(::std::string* username) {
+inline void UserInfo::set_allocated_username(::std::string* username) {
   if (username != NULL) {
     
   } else {
     
   }
   username_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), username);
-  // @@protoc_insertion_point(field_set_allocated:chat.User.username)
+  // @@protoc_insertion_point(field_set_allocated:chat.UserInfo.username)
 }
 
 // bool isFriend = 10;
-inline void User::clear_isfriend() {
+inline void UserInfo::clear_isfriend() {
   isfriend_ = false;
 }
-inline bool User::isfriend() const {
-  // @@protoc_insertion_point(field_get:chat.User.isFriend)
+inline bool UserInfo::isfriend() const {
+  // @@protoc_insertion_point(field_get:chat.UserInfo.isFriend)
   return isfriend_;
 }
-inline void User::set_isfriend(bool value) {
+inline void UserInfo::set_isfriend(bool value) {
   
   isfriend_ = value;
-  // @@protoc_insertion_point(field_set:chat.User.isFriend)
+  // @@protoc_insertion_point(field_set:chat.UserInfo.isFriend)
 }
 
 // bool isOnline = 11;
-inline void User::clear_isonline() {
+inline void UserInfo::clear_isonline() {
   isonline_ = false;
 }
-inline bool User::isonline() const {
-  // @@protoc_insertion_point(field_get:chat.User.isOnline)
+inline bool UserInfo::isonline() const {
+  // @@protoc_insertion_point(field_get:chat.UserInfo.isOnline)
   return isonline_;
 }
-inline void User::set_isonline(bool value) {
+inline void UserInfo::set_isonline(bool value) {
   
   isonline_ = value;
-  // @@protoc_insertion_point(field_set:chat.User.isOnline)
+  // @@protoc_insertion_point(field_set:chat.UserInfo.isOnline)
 }
 
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
 #endif  // !PROTOBUF_INLINE_NOT_IN_HEADERS
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

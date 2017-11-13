@@ -13,7 +13,7 @@ EXECUTE_PROCESS(
 
 include_directories(src)
 file(GLOB SOURCES
-        src/protobuf/*
+        src/**/*
         src/*.h
         src/*.cpp)
 
