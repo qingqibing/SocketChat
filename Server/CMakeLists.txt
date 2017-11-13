@@ -3,16 +3,25 @@ project(Server)
 
 set(CMAKE_CXX_STANDARD 11)
 
-include_directories(src)
+find_package(Protobuf REQUIRED)
+include_directories(${Protobuf_INCLUDE_DIRS})
+include_directories(${CMAKE_CURRENT_BINARY_DIR})
+EXECUTE_PROCESS(
+        COMMAND ${PROTOBUF_PROTOC_EXECUTABLE}
+        --cpp_out=. protobuf/chat.proto
+        WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/src)
 
+include_directories(src)
 file(GLOB SOURCES
+        src/protobuf/*
+        ${PROTO_SRCS} ${PROTO_HDRS}
         src/*.h
         src/*.cpp)
 
 add_executable(Server ${SOURCES})
+target_link_libraries(Server ${Protobuf_LIBRARIES})
 
 list(REMOVE_ITEM SOURCES src/main.cpp)
-
 add_library(ServerLib SHARED ${SOURCES})
 
 
