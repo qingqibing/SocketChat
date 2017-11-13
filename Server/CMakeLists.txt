@@ -14,7 +14,6 @@ EXECUTE_PROCESS(
 include_directories(src)
 file(GLOB SOURCES
         src/protobuf/*
-        ${PROTO_SRCS} ${PROTO_HDRS}
         src/*.h
         src/*.cpp)
 
@@ -23,6 +22,7 @@ target_link_libraries(Server ${Protobuf_LIBRARIES})
 
 list(REMOVE_ITEM SOURCES src/main.cpp)
 add_library(ServerLib SHARED ${SOURCES})
+target_link_libraries(ServerLib ${Protobuf_LIBRARIES})
 
 
 # Download and unpack googletest at configure time

@@ -1,5 +1,11 @@
 syntax = "proto3";
 package chat;
+import "google/protobuf/any.proto";
+
+message NetMsg {
+    string token = 1;
+    google.protobuf.Any data = 2;
+}
 
 message Response {
     bool success = 1;
@@ -31,7 +37,7 @@ message GetMessagesRequest {
     int32 afterTimeUnix = 2;
 }
 message GetMessagesResponse {
-    repeated Message messages = 1;
+    repeated ChatMessage messages = 1;
 }
 
 message MakeFriendRequest {
@@ -39,7 +45,7 @@ message MakeFriendRequest {
     int32 targetID = 2;
 }
 
-message Message {
+message ChatMessage {
     int32 senderID = 1;
     int32 targetID = 2;
     int32 timeUnix = 3;
