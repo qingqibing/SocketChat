@@ -38,7 +38,7 @@ chat::NetMsg SocketServer::onReceive(chat::NetMsg const &msg) const {
 }
 
 SocketServer::SocketServer(Server &server) : server(server) {
-
+	signal(SIGPIPE, SIG_IGN);
 }
 
 SocketServer::~SocketServer() {
@@ -66,14 +66,13 @@ void SocketServer::run(int port) {
 		throw std::runtime_error("Failed to listen socket");
 
 	listenLoop();
-//	thread = std::thread(&SocketServer::listenLoop, this);
 }
 
 void SocketServer::end() {
 	close(socketId);
 }
 
-void SocketServer::listenLoop() const {
+void SocketServer::listenLoop() {
 	sockaddr_in addr;
 	socklen_t addrSize;
 	while (true) {
@@ -82,10 +81,17 @@ void SocketServer::listenLoop() const {
 			cerr << "Failed to accept a request" << endl;
 			continue;
 		}
-		cerr << "Accept: " << inet_ntoa(addr.sin_addr) << endl;
+		cerr << "Accept " << connectId << " from " << inet_ntoa(addr.sin_addr) << endl;
+		threads.emplace_back(&SocketServer::handleConnection, this, connectId);
+	}
+}
 
-		static char buffer[BUFFER_SIZE];
+void SocketServer::handleConnection(int connectId) const {
+	char buffer[BUFFER_SIZE];
+	while(true) {
 		auto len = (int)recv(connectId, buffer, sizeof(buffer), 0);
+		if(len < 0)
+			break;
 		auto msg = NetMsg();
 		msg.ParseFromArray(buffer, len);
 		cerr << msg.data().DebugString() << endl;
@@ -94,4 +100,5 @@ void SocketServer::listenLoop() const {
 		rsp.SerializeToArray(buffer, len);
 		send(connectId, buffer, len, 0);
 	}
+	cerr << "Close " << connectId << endl;
 }

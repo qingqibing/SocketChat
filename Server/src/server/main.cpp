@@ -6,6 +6,6 @@
 int main() {
 	auto server = Server();
 	SocketServer socket(server);
-	socket.run(8000);
+	socket.run(8002);
 	return 0;
 }

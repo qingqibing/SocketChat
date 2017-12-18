@@ -5,7 +5,7 @@ from google.protobuf.any_pb2 import Any
 
 
 class SocketClient:
-    host = ('localhost', 8000)
+    host = ('localhost', 8002)
     MAX_LENGTH = 1 << 20
     token = ''
     _socket = None

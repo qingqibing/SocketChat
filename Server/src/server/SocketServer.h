@@ -13,12 +13,13 @@ class SocketServer {
 	Server& server;
 	int port;
 	int socketId;
-	std::thread thread;
+	std::vector<std::thread> threads;
 	static const int QUEUE_SIZE = 5;
-	static const int BUFFER_SIZE = 1 << 20;
+	static const int BUFFER_SIZE = 1 << 10;
 	// resolve type, auth, dispatch
 	chat::NetMsg onReceive(chat::NetMsg const& msg) const;
-	void listenLoop() const;
+	void listenLoop();
+	void handleConnection(int connectId) const;
 public:
 	SocketServer(Server &server);
 	void run(int port);
