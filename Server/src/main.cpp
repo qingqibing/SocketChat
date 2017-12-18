@@ -1,7 +1,11 @@
 #include <iostream>
+#include <server/Server.h>
+#include <server/SocketServer.h>
 #include "protobuf/chat.pb.h"
 
 int main() {
-	std::cout << "Hello, World!" << std::endl;
+	auto server = Server();
+	SocketServer socket(server);
+	socket.run(8000);
 	return 0;
 }

@@ -86,3 +86,15 @@ GetUserInfosResponse Server::getUserInfos(GetUserInfosRequest const &request) co
 bool Server::isOnline(int userID) const {
 	return onlineUsers.find(userID) != onlineUsers.end();
 }
+
+GetMessagesResponse Server::getMessages(GetMessagesRequest const &request) const {
+	return GetMessagesResponse();
+}
+
+Response Server::makeFriend(MakeFriendRequest const &request) {
+	return Response();
+}
+
+Response Server::newMessage(ChatMessage const &message) {
+	return Response();
+}
