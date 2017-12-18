@@ -8,22 +8,28 @@ include_directories(${Protobuf_INCLUDE_DIRS})
 include_directories(${CMAKE_CURRENT_BINARY_DIR})
 EXECUTE_PROCESS(
         COMMAND ${PROTOBUF_PROTOC_EXECUTABLE}
-        --cpp_out=. protobuf/chat.proto
+        --cpp_out=. --python_out=../client protobuf/chat.proto
         WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/src)
 
 include_directories(src)
-file(GLOB SOURCES
-        src/**/*
-        src/*.h
-        src/*.cpp)
 
-add_executable(Server ${SOURCES})
-target_link_libraries(Server ${Protobuf_LIBRARIES})
+file(GLOB BASE_SRC src/model/* src/protobuf/*)
+add_library(Base SHARED ${BASE_SRC})
+target_link_libraries(Base ${Protobuf_LIBRARIES})
 
-list(REMOVE_ITEM SOURCES src/main.cpp)
-add_library(ServerLib SHARED ${SOURCES})
-target_link_libraries(ServerLib ${Protobuf_LIBRARIES})
+file(GLOB SERVER_SRC src/server/*)
+list(REMOVE_ITEM SERVER_SRC src/server/main.cpp)
+add_library(ServerLib SHARED ${SERVER_SRC})
+target_link_libraries(ServerLib Base)
+add_executable(Server src/server/main.cpp)
+target_link_libraries(Server ServerLib)
 
+#file(GLOB CLIENT_SRC src/client/*)
+#list(REMOVE_ITEM CLIENT_SRC src/client/main.cpp)
+#add_library(ClientLib SHARED ${CLIENT_SRC})
+#target_link_libraries(ClientLib Base)
+#add_executable(Client src/client/main.cpp)
+#target_link_libraries(Client ClientLib)
 
 # Download and unpack googletest at configure time
 configure_file(CMakeLists.txt.in googletest-download/CMakeLists.txt)
@@ -61,6 +67,7 @@ file(GLOB TEST_SOURCES test/*.cpp test/*.h test/**/*.cpp)
 # Now simply link against gtest or gtest_main as needed. Eg
 add_executable(Test ${TEST_SOURCES})
 target_link_libraries(Test ServerLib)
+#target_link_libraries(Test ClientLib)
 target_link_libraries(Test gtest gtest_main)
 #target_link_libraries(Test gmock gmock_main)
 #add_test(NAME example_test COMMAND example)

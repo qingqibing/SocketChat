@@ -74,15 +74,21 @@ void SocketServer::end() {
 }
 
 void SocketServer::listenLoop() const {
+	sockaddr_in addr;
+	socklen_t addrSize;
 	while (true) {
-		int connectId = accept(socketId, (sockaddr *) nullptr, nullptr);
-		if (connectId == -1)
+		int connectId = accept(socketId, (sockaddr*)(&addr), &addrSize);
+		if (connectId == -1) {
 			cerr << "Failed to accept a request" << endl;
+			continue;
+		}
+		cerr << "Accept: " << inet_ntoa(addr.sin_addr) << endl;
 
 		static char buffer[BUFFER_SIZE];
 		auto len = (int)recv(connectId, buffer, sizeof(buffer), 0);
 		auto msg = NetMsg();
 		msg.ParseFromArray(buffer, len);
+		cerr << msg.data().DebugString() << endl;
 		auto rsp = onReceive(msg);
 		len = rsp.ByteSize();
 		rsp.SerializeToArray(buffer, len);

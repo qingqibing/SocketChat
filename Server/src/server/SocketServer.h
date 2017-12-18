@@ -15,7 +15,7 @@ class SocketServer {
 	int socketId;
 	std::thread thread;
 	static const int QUEUE_SIZE = 5;
-	static const int BUFFER_SIZE = 5;
+	static const int BUFFER_SIZE = 1 << 20;
 	// resolve type, auth, dispatch
 	chat::NetMsg onReceive(chat::NetMsg const& msg) const;
 	void listenLoop() const;
