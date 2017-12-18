@@ -25,8 +25,10 @@ LoginResponse Server::login(LoginRequest const &request) {
 		return rsp;
 	}
 	onlineUsers.insert(user->id);
+	auto token = tokens[user->id] = makeToken();
 	rsp.set_success(true);
 	rsp.set_id(user->id);
+	rsp.set_token(token);
 	return rsp;
 }
 
@@ -70,9 +72,10 @@ User *Server::newUser(std::string const &username, std::string const &password) 
 
 GetUserInfosResponse Server::getUserInfos(GetUserInfosRequest const &request) const {
 	auto sender = getUser( request.senderid() );
-	if(sender == nullptr)
-		throw std::runtime_error("User not exist");
 	GetUserInfosResponse rsp;
+	if(sender == nullptr)
+		return rsp;
+//		throw std::runtime_error("User not exist");
 	for(auto pair: users) {
 		auto user = pair.second;
 		auto info = rsp.add_users();
@@ -88,13 +91,41 @@ bool Server::isOnline(int userID) const {
 }
 
 GetMessagesResponse Server::getMessages(GetMessagesRequest const &request) const {
-	return GetMessagesResponse();
+	auto rsp = GetMessagesResponse();
+	for(auto const& m: messages)
+		if(m.targetid() == request.senderid() && m.timeunix() >= request.aftertimeunix())
+			rsp.add_messages()->CopyFrom(m);
+	return rsp;
 }
 
 Response Server::makeFriend(MakeFriendRequest const &request) {
-	return Response();
+	auto user1 = getUser(request.senderid());
+	auto user2 = getUser(request.targetid());
+	if(user1 == nullptr || user2 == nullptr)
+		return Error("User not exist");
+	user1->addFriend(user2->id);
+	user2->addFriend(user1->id);
+	return OK();
 }
 
 Response Server::newMessage(ChatMessage const &message) {
-	return Response();
+	if(getUser(message.senderid()) == nullptr
+	   || getUser(message.targetid()) == nullptr)
+		return Error("User not exist");
+	auto m = message;
+	m.set_timeunix(time(0));
+	messages.push_back(std::move(m));
+	return OK();
+}
+
+std::string Server::makeToken() {
+	const int TOKEN_LENGTH = 16;
+	auto s = std::string();
+	for(int i=0; i<TOKEN_LENGTH; ++i)
+		s.push_back(static_cast<char>(rand() % 64 + 32));
+	return s;
+}
+
+std::string Server::getToken(int id) const {
+	return tokens.at(id);
 }

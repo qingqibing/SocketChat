@@ -12,7 +12,7 @@
 class SocketServer {
 	Server& server;
 	int port;
-	int socketId;
+	int socketId = 0;
 	std::vector<std::thread> threads;
 	static const int QUEUE_SIZE = 5;
 	static const int BUFFER_SIZE = 1 << 10;
@@ -23,7 +23,7 @@ class SocketServer {
 public:
 	SocketServer(Server &server);
 	void run(int port);
-	void end();
+	void closeSocket();
 	~SocketServer();
 };
 

@@ -11,8 +11,11 @@ using namespace chat;
 
 class Server {
 	std::map<int, User*> users;
+	std::map<int, std::string> tokens;
 	std::set<int> onlineUsers;
+	std::vector<ChatMessage> messages;
 
+	static std::string makeToken();
 	bool isOnline(int userID) const;
 	User* getUserByName(std::string const& username) const;
 	User* getUser(int id) const;
@@ -21,6 +24,7 @@ class Server {
 	static Response OK();
 	static Response Error(std::string const& info);
 public:
+	std::string getToken(int id) const;
 	LoginResponse login(LoginRequest const& request);
 	Response logout(LogoutRequest const& request);
 	Response signup(SignupRequest const& request);

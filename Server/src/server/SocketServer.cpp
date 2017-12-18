@@ -42,7 +42,7 @@ SocketServer::SocketServer(Server &server) : server(server) {
 }
 
 SocketServer::~SocketServer() {
-
+	closeSocket();
 }
 
 void SocketServer::run(int port) {
@@ -68,8 +68,10 @@ void SocketServer::run(int port) {
 	listenLoop();
 }
 
-void SocketServer::end() {
-	close(socketId);
+void SocketServer::closeSocket() {
+	if(socketId)
+		close(socketId);
+	socketId = 0;
 }
 
 void SocketServer::listenLoop() {
