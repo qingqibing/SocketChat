@@ -10,6 +10,7 @@
 
 using std::cerr;
 using std::endl;
+using std::cout;
 
 
 chat::NetMsg SocketServer::onReceive(chat::NetMsg const &msg) const {
@@ -64,6 +65,7 @@ void SocketServer::run(int port) {
 	rc = listen(socketId, QUEUE_SIZE);
 	if(rc == -1)
 		throw std::runtime_error("Failed to listen socket");
+	cout << "Start server at " << port << endl;
 
 	listenLoop();
 }
@@ -89,18 +91,27 @@ void SocketServer::listenLoop() {
 }
 
 void SocketServer::handleConnection(int connectId) const {
-	char buffer[BUFFER_SIZE];
+	auto buf = std::vector<char>(BUFFER_SIZE);
 	while(true) {
-		auto len = (int)recv(connectId, buffer, sizeof(buffer), 0);
+		int len = 0, len0;
+		while(true) {
+			len0 = (int)recv(connectId, buf.data() + len, buf.size() - len, 0);
+			len += len0;
+			if(len0 < 0 || len < buf.size())
+				break;
+			buf.resize(buf.size() * 2);
+		}
 		if(len < 0)
 			break;
 		auto msg = NetMsg();
-		msg.ParseFromArray(buffer, len);
-		cerr << msg.data().DebugString() << endl;
+		msg.ParseFromArray(buf.data(), len);
+		cerr << msg.data().type_url() << endl;
 		auto rsp = onReceive(msg);
 		len = rsp.ByteSize();
-		rsp.SerializeToArray(buffer, len);
-		send(connectId, buffer, len, 0);
+		if(len > buf.size())
+			buf.resize(len);
+		rsp.SerializeToArray(buf.data(), len);
+		send(connectId, buf.data(), len, 0);
 	}
 	cerr << "Close " << connectId << endl;
 }

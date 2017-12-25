@@ -5,14 +5,15 @@ from google.protobuf.any_pb2 import Any
 
 
 class SocketClient:
-    host = ('localhost', 8002)
-    MAX_LENGTH = 1 << 20
+    _host = ('localhost', 8000)
     token = ''
+    _MAX_LENGTH = 1 << 30
     _socket = None
 
-    def __init__(self) -> None:
+    def __init__(self, host) -> None:
+        self._host = host
         self._socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self._socket.connect(self.host)
+        self._socket.connect(self._host)
 
     def __del__(self):
         self._socket.close()
@@ -24,7 +25,7 @@ class SocketClient:
         msg.token = self.token
         msg.data.CopyFrom(data)
         self._socket.send(msg.SerializeToString())
-        recv_data = self._socket.recv(self.MAX_LENGTH)
+        recv_data = self._socket.recv(self._MAX_LENGTH)
         rsp = NetMsg()
         rsp.ParseFromString(recv_data)
         ret = response_type()

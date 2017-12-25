@@ -3,9 +3,16 @@ from chat_pb2 import *
 
 
 class Client:
-    sc = SocketClient()
+    sc = None
     id = None
     token = None
+    _self = None
+    _users = []
+
+    def __init__(self, host: str) -> None:
+        addr, port = host.split(':')
+        host = (addr, int(port))
+        self.sc = SocketClient(host)
 
     def check_login(self):
         if self.id is None:
@@ -43,13 +50,20 @@ class Client:
         req = GetUserInfosRequest()
         req.senderID = self.id
         rsp = self.sc.send(req, GetUserInfosResponse)
+        self._users = rsp.users
+        self._self = [u for u in self._users if u.id == self.id][0]
         return rsp.users
 
-    def get_messages(self) -> [ChatMessage]:
+    def get_self(self) -> UserInfo:
+        if self._self is None:
+            self.get_users()
+        return self._self
+
+    def get_messages(self, afterTime=0) -> [ChatMessage]:
         self.check_login()
         req = GetMessagesRequest()
         req.senderID = self.id
-        req.afterTimeUnix = 0
+        req.afterTimeUnix = int(afterTime)
         rsp = self.sc.send(req, GetMessagesResponse)
         return rsp.messages
 
