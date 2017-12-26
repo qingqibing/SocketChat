@@ -67,19 +67,19 @@ class Client:
         rsp = self.sc.send(req, GetMessagesResponse)
         return rsp.messages
 
-    def get_userid(self, username) -> int:
+    def get_user(self, username) -> UserInfo:
         self.check_login()
         users = self.get_users()
         users = [u for u in users if u.username == username]
         if len(users) == 0:
             raise Exception('No such user \'%s\'' % username)
-        return users[0].id
+        return users[0]
 
     def make_friend_with(self, username):
         self.check_login()
         req = MakeFriendRequest()
         req.senderID = self.id
-        req.targetID = self.get_userid(username)
+        req.targetID = self.get_user(username).id
         rsp = self.sc.send(req, Response)
         if not rsp.success:
             raise Exception('Failed to make friend: %s' % rsp.info)

@@ -94,6 +94,8 @@ void SocketServer::handleConnection(int connectId) const {
 	auto buf = std::vector<char>(BUFFER_SIZE);
 	while(true) {
 		int len = (int)recv(connectId, buf.data(), buf.size(), 0);
+		if(len <= 0)
+			break;
 		int total = *(int*)buf.data() + 4;
 		cerr << "total " << total << endl;
 		if(total > buf.size())
@@ -101,11 +103,7 @@ void SocketServer::handleConnection(int connectId) const {
 		while(len < total) {
 			int len0 = (int)recv(connectId, buf.data() + len, buf.size() - len, 0);
 			len += len0;
-			if(len0 < 0)
-				break;
 		}
-		if(len < 0)
-			break;
 		auto msg = NetMsg();
 		msg.ParseFromArray(buf.data()+4, len-4);
 		cerr << msg.data().type_url() << endl;

@@ -99,6 +99,7 @@ class ClientCLI:
     search
     ls
     recvmsg
+    recvfile
 """.strip('\n')
         print(HELP)
 
@@ -117,7 +118,10 @@ class ClientCLI:
     def handle_search(self, args):
         users = self.client.get_users()
         for u in users:
-            print(u.username)
+            s = u.username
+            s += '\t'
+            s += 'online' if u.isOnline else 'offline'
+            print(s)
 
     def handle_ls(self, args):
         users = self.client.get_users()
@@ -149,8 +153,10 @@ class ClientCLI:
                 print('File saved to: ' + path)
 
     def handle_chat(self, args):
-        userid = self.client.get_userid(username=args[0])
-        sub = ChatCLI(self.client, userid)
+        user = self.client.get_user(username=args[0])
+        if not user.isFriend:
+            raise Exception('User \'%s\' is not your friend' % args[0])
+        sub = ChatCLI(self.client, user.id)
         sub.run()
 
     def run(self):

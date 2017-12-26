@@ -109,9 +109,12 @@ Response Server::makeFriend(MakeFriendRequest const &request) {
 }
 
 Response Server::newMessage(ChatMessage const &message) {
-	if(getUser(message.senderid()) == nullptr
-	   || getUser(message.targetid()) == nullptr)
+	auto sender = getUser(message.senderid());
+	auto target = getUser(message.targetid());
+	if(sender == nullptr || target == nullptr)
 		return Error("User not exist");
+	if(!sender->isFriend(message.targetid()))
+		return Error("Can not send message to non-friend");
 	auto m = message;
 	m.set_timeunix(time(0));
 	messages.push_back(std::move(m));
