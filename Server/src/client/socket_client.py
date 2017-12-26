@@ -24,8 +24,14 @@ class SocketClient:
         msg = NetMsg()
         msg.token = self.token
         msg.data.CopyFrom(data)
-        self._socket.send(msg.SerializeToString())
+        senddata = msg.SerializeToString()
+        self._socket.send(len(senddata).to_bytes(4, 'little'))
+        self._socket.send(senddata)
         recv_data = self._socket.recv(self._MAX_LENGTH)
+        size = int.from_bytes(recv_data[0:4], 'little')
+        recv_data = recv_data[4:]
+        while len(recv_data) < size:
+            recv_data += self._socket.recv(self._MAX_LENGTH)
         rsp = NetMsg()
         rsp.ParseFromString(recv_data)
         ret = response_type()

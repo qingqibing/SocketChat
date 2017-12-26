@@ -93,25 +93,29 @@ void SocketServer::listenLoop() {
 void SocketServer::handleConnection(int connectId) const {
 	auto buf = std::vector<char>(BUFFER_SIZE);
 	while(true) {
-		int len = 0, len0;
-		while(true) {
-			len0 = (int)recv(connectId, buf.data() + len, buf.size() - len, 0);
+		int len = (int)recv(connectId, buf.data(), buf.size(), 0);
+		int total = *(int*)buf.data() + 4;
+		cerr << "total " << total << endl;
+		if(total > buf.size())
+			buf.resize(total);
+		while(len < total) {
+			int len0 = (int)recv(connectId, buf.data() + len, buf.size() - len, 0);
 			len += len0;
-			if(len0 < 0 || len < buf.size())
+			if(len0 < 0)
 				break;
-			buf.resize(buf.size() * 2);
 		}
 		if(len < 0)
 			break;
 		auto msg = NetMsg();
-		msg.ParseFromArray(buf.data(), len);
+		msg.ParseFromArray(buf.data()+4, len-4);
 		cerr << msg.data().type_url() << endl;
 		auto rsp = onReceive(msg);
 		len = rsp.ByteSize();
-		if(len > buf.size())
-			buf.resize(len);
-		rsp.SerializeToArray(buf.data(), len);
-		send(connectId, buf.data(), len, 0);
+		if(len+4 > buf.size())
+			buf.resize(len+4);
+		*(int*)buf.data() = len;
+		rsp.SerializeToArray(buf.data()+4, len);
+		send(connectId, buf.data(), len+4, 0);
 	}
 	cerr << "Close " << connectId << endl;
 }
